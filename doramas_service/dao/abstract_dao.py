@@ -3,21 +3,21 @@ from abc import ABC, abstractmethod
 
 class AbstractDAO(ABC):
     @abstractmethod
-    def add(self, item):
+    async def add(self, item):
         raise NotImplementedError
     
     @abstractmethod
-    def all(self):
+    async def all(self):
         raise NotImplementedError
 
     @abstractmethod
-    def get(self, reference):
+    async def get(self, item_id):
         raise NotImplementedError
     
     @abstractmethod
-    def update(self, item_id, item):
+    async def update(self, item_id, item):
         raise NotImplementedError
 
     @abstractmethod
-    def delete(self, reference):
+    async def delete(self, item_id):
         raise NotImplementedError
