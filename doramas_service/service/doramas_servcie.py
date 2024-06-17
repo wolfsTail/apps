@@ -10,7 +10,8 @@ class DoramasService:
             return await self.uow.doramas.all()
 
     async def get(self, **kwargs):
-        pass
+        async with self.uow:
+            return await self.uow.doramas.get(kwargs["id"]) if kwargs["id"] else await self.uow.doramas.get(**kwargs)
 
     async def create(self):
         pass

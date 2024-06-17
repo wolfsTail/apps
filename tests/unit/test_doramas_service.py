@@ -2,19 +2,27 @@ import pytest
 
 from doramas_service.service import DoramasService
 from doramas_service.service.uow import MockUnitOfWork
-from doramas_service.dao import MockDAO
 
 
-@pytest.mark.asyncio
-async def test_get_all_doramas_from_service():
-    data = {
+data = {
         1: {"id": 1, "name": "Doramas 1"},
         2: {"id": 2, "name": "Doramas 2"},
         3: {"id": 3, "name": "Doramas 3"},
     }
+
+def create_service(data):
     uow = MockUnitOfWork(data)
     service = DoramasService(uow)
+    return service
+
+@pytest.mark.asyncio
+async def test_get_all_doramas_from_service():
+    service = create_service(data)
     result = await service.all()
-    print(result)
     assert result == data
-    
+
+@pytest.mark.asyncio
+async def test_get_dorama_from_service():
+    service = create_service(data)
+    result = await service.get(id=1)
+    assert result == data[1]
