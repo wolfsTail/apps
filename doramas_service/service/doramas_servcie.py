@@ -18,8 +18,11 @@ class DoramasService:
             added_model = await self.uow.doramas.add(movie)
             return added_model
 
-    async def update(self):
-        pass
+    async def update(self, item_id, item):
+        async with self.uow:
+            updated_model = await self.uow.doramas.update(item_id, item)
+            return updated_model
 
-    async def delete(self):
-        pass
+    async def delete(self, item_id):
+        async with self.uow:
+            await self.uow.doramas.delete(item_id)

@@ -33,3 +33,18 @@ async def test_add_one_dorama():
     result = await service.create({"name": "Doramas 4"})
     assert result["name"] == "Doramas 4"
     assert result["id"] == 4
+    await service.delete(4)
+
+@pytest.mark.asyncio
+async def test_update_one_dorama():
+    service = create_service(data)
+    result = await service.update(1, {"name": "Doramas 1 new"})
+    assert result["name"] == "Doramas 1 new"
+    assert result["id"] == 1
+
+@pytest.mark.asyncio
+async def test_delete_one_dorama():
+    service = create_service(data)
+    await service.delete(1)
+    assert len(data) == 2
+    assert data == {2: {"id": 2, "name": "Doramas 2"}, 3: {"id": 3, "name": "Doramas 3"}}

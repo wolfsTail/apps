@@ -20,7 +20,11 @@ class MockDAO(AbstractDAO):
             return self._data[item_id]
 
     async def update(self, item_id, item):
-        self._data[item_id] = item
+        updating_item = self._data[item_id]
+        for key in item.keys():
+            if key in updating_item:
+                updating_item[key] = item[key]
+        return self._data[item_id]
 
     async def delete(self, item_id):
         self._data.pop(item_id)
