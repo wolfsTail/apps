@@ -6,7 +6,7 @@ from doramas_service.utils.converter import pydantic_model_to_dict, dict_to_pyda
 from doramas_service.schemas import DoramaFromDB, DoramaToCreate, DoramaToUpdate
 
 
-router = APIRouter(prefix="/doramas")
+router = APIRouter(prefix="/doramas", tags=["doramas"])
 
 
 @router.get("/")
@@ -60,3 +60,16 @@ async def update_dorama(
         return context
     except Exception as err:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Dorama not found")
+
+@router.delete("/{id}")
+async def delete_dorama(
+    id: int, service: DoramasService = Depends(get_doramas_service_with_mockuow)
+    ) -> dict:
+    try:
+        await service.delete(item_id=id)
+        context = {
+            "message": f"Dorama with {id} deleted successfully",
+        }
+        return context
+    except Exception as err:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Deleted dorama not found")
