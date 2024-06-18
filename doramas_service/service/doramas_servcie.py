@@ -13,9 +13,9 @@ class DoramasService:
         async with self.uow:
             return await self.uow.doramas.get(**kwargs)
 
-    async def create(self, movie: dict):
+    async def create(self, dorama: dict):
         async with self.uow:
-            added_model = await self.uow.doramas.add(movie)
+            added_model = await self.uow.doramas.add(dorama)
             return added_model
 
     async def update(self, item_id, item):

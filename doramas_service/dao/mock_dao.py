@@ -7,7 +7,10 @@ class MockDAO(AbstractDAO):
 
     async def add(self, item):
         item_id = len(self._data) + 1
-        item["id"] = item_id
+        item = {
+            "id": item_id,
+            **item,
+        }
         self._data.update({item_id: item})
         return self._data[item_id]
 
