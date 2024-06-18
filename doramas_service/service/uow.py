@@ -28,7 +28,9 @@ class AbstractUnitOfWork(ABC):
 
 
 class MockUnitOfWork(AbstractUnitOfWork):
-    def __init__(self, data):
+    def __init__(self, data=None):
+        if data is None:
+            data = {}
         self.doramas = MockDAO(data)
         self.committed = False
 

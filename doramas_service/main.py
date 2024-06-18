@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 
+from doramas_service.api import router
+
 
 app = FastAPI(
     title="Doramas Service",
@@ -7,6 +9,7 @@ app = FastAPI(
     description="Doramas service API",
     docs_url="/docs",
 )
+app.include_router(router)
 
 
 @app.get("/")
