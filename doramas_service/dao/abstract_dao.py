@@ -11,7 +11,7 @@ class AbstractDAO(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    async def get(self, item_id):
+    async def get(self, **kwargs):
         raise NotImplementedError
     
     @abstractmethod

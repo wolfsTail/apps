@@ -26,3 +26,10 @@ async def test_get_dorama_from_service():
     service = create_service(data)
     result = await service.get(id=1)
     assert result == data[1]
+
+@pytest.mark.asyncio
+async def test_add_one_dorama():
+    service = create_service(data)
+    result = await service.create({"name": "Doramas 4"})
+    assert result["name"] == "Doramas 4"
+    assert result["id"] == 4

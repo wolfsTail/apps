@@ -11,10 +11,12 @@ class DoramasService:
 
     async def get(self, **kwargs):
         async with self.uow:
-            return await self.uow.doramas.get(kwargs["id"]) if kwargs["id"] else await self.uow.doramas.get(**kwargs)
+            return await self.uow.doramas.get(**kwargs)
 
-    async def create(self):
-        pass
+    async def create(self, movie: dict):
+        async with self.uow:
+            added_model = await self.uow.doramas.add(movie)
+            return added_model
 
     async def update(self):
         pass

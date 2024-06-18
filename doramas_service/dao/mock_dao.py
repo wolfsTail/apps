@@ -6,13 +6,18 @@ class MockDAO(AbstractDAO):
         self._data = data
 
     async def add(self, item):
-        self._data.update({len(self._data)+1: item})
+        item_id = len(self._data) + 1
+        item["id"] = item_id
+        self._data.update({item_id: item})
+        return self._data[item_id]
 
     async def all(self):
         return self._data
 
-    async def get(self, item_id):
-        return self._data[item_id]
+    async def get(self, **kwargs):
+        if "id" in kwargs:
+            item_id = kwargs["id"]
+            return self._data[item_id]
 
     async def update(self, item_id, item):
         self._data[item_id] = item
