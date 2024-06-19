@@ -2,7 +2,10 @@ from fastapi import APIRouter, Depends, HTTPException, status
 
 from doramas_service.service.doramas_servcie import DoramasService
 from doramas_service.utils.depends import get_doramas_service_with_mockuow
-from doramas_service.utils.converter import pydantic_model_to_dict, dict_to_pydantic_model
+from doramas_service.utils.converter import (
+    pydantic_model_to_dict, 
+    dict_to_pydantic_model, 
+    dicts_to_list_of_pydantic_models)
 from doramas_service.schemas import DoramaFromDB, DoramaToCreate, DoramaToUpdate
 
 
@@ -14,11 +17,7 @@ async def get_all_doramas(
     service: DoramasService = Depends(get_doramas_service_with_mockuow)
     ) -> list[DoramaFromDB]:
     data_with_dicts = await service.all()
-    data_with_pydantic_models = []
-    for key in data_with_dicts:
-        data_with_pydantic_models.append(dict_to_pydantic_model(
-            model=DoramaFromDB, model_dict=data_with_dicts[key]
-        ))
+    data_with_pydantic_models = dicts_to_list_of_pydantic_models(DoramaFromDB, data_with_dicts)
     return data_with_pydantic_models    
 
 @router.get("/{id}")
